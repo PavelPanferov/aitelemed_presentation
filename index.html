@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Телемедицина - Инвестиционная презентация</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        :root {
+            /* Medical theme colors */
+            --primary: #4A90E2;
+            --primary-dark: #2E5F8C;
+            --primary-light: #7FB3E8;
+            --secondary: #00C9A7;
+            --accent: #FF6B6B;
+            --bg: #F8FCFF;
+            --text: #1A2332;
+            --muted: #5B6B7C;
+            --shadow-soft: 0 30px 70px rgba(26, 35, 50, 0.18);
+            --danger: #FF4444;
+            --warning: #FFA726;
+            --success: #00C9A7;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background:
+                radial-gradient(circle at 18% 22%, rgba(74, 144, 226, 0.18), transparent 55%),
+                radial-gradient(circle at 82% 78%, rgba(0, 201, 167, 0.14), transparent 60%),
+                linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+            color: var(--text);
+            overflow: hidden;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        strong {
+            font-weight: 700;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* DECK & SLIDES */
+        .deck {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(2rem, 4vh, 3rem) clamp(1rem, 2vw, 2rem);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .slide.slide-enhanced {
+            padding: 0;
+            overflow-y: auto;
+            align-items: flex-start;
+        }
+
+        .slide.is-active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        .slide-content {
+            --scale-factor: 1;
+            width: min(1600px, 96%);
+            max-width: 96%;
+            transform-origin: center center;
+            transform: scale(var(--scale-factor));
+            transition: transform 0.4s ease;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: clamp(1.2rem, 3vh, 2.2rem);
+            margin: 0 auto;
+        }
+
+        .slide-content.with-media {
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+            gap: clamp(2.5rem, 5vw, 4rem);
+            align-items: start;
+            padding-top: clamp(1rem, 3vh, 2rem);
+        }
+
+        .title-slide .slide-content {
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+            gap: clamp(2rem, 7vw, 5.5rem);
+            align-items: center;
+            padding-top: 0;
+        }
+
+        .slide:not(.title-slide) .slide-content:not(.with-media) {
+            width: min(1500px, 94%);
+            padding-top: clamp(2rem, 5vh, 3rem);
+            justify-content: start;
+        }
+
+        /* SLIDE NUMBERING */
+        .slide-number {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+        .title-slide .slide-number {
+            display: none;
+        }
+
+        /* 3D & HERO IMAGES */
+        .slide-3d-image {
+            width: clamp(220px, 28vw, 380px);
+            height: clamp(220px, 28vw, 380px);
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(74, 144, 226, 0.3));
+            animation: float 6s ease-in-out infinite;
+            justify-self: center;
+        }
+
+        .title-slide .hero-media {
+            width: clamp(330px, 42vw, 570px);
+            height: clamp(330px, 42vw, 570px);
+            z-index: -1;
+            position: relative;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(0.5deg); }
+        }
+
+        /* CONTENT AREAS */
+        .slide-main-content {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(1rem, 3vh, 1.8rem);
+        }
+
+        .hero-content {
+            gap: clamp(1.2rem, 3vh, 2rem);
+        }
+
+        /* TYPOGRAPHY */
+        .title-slide h1 {
+            font-size: clamp(3rem, 7vw, 4.8rem);
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+            color: var(--primary-dark);
+            font-weight: 600;
+            margin: 0;
+            max-width: 680px;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4.4vw, 2.8rem);
+            font-weight: 800;
+            margin: 0;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 74px;
+            height: 4px;
+            border-radius: 999px;
+            margin-top: 1.1rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        h2.gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 3vw, 1.6rem);
+            font-weight: 700;
+            color: var(--text);
+            margin: 0.4rem 0 0.6rem;
+        }
+
+        h4 {
+            font-size: clamp(1.2rem, 2.2vw, 1.4rem);
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 0.6rem 0;
+        }
+
+        p {
+            margin: 0 0 1rem;
+            color: var(--muted);
+            font-size: clamp(1.15rem, 2.1vw, 1.3rem);
+        }
+
+        ul, ol {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: var(--muted);
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        li {
+            font-size: clamp(1.15rem, 2.1vw, 1.3rem);
+        }
+
+        .lead {
+            font-size: clamp(1.05rem, 2.3vw, 1.3rem);
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .footnote {
+            font-size: 0.9rem;
+            color: rgba(26, 35, 50, 0.6);
+            font-style: italic;
+            margin-top: 1.2rem;
+        }
+
+        .footnote.light {
+            color: rgba(255, 255, 255, 0.85);
+            font-style: normal;
+        }
+
+        /* BADGES */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.55rem 1.2rem;
+            border-radius: 999px;
+            background: rgba(74, 144, 226, 0.18);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .problem-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.3rem;
+            border-radius: 999px;
+            background: rgba(255, 68, 68, 0.15);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--danger);
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .hero-tags span {
+            padding: 0.45rem 1.1rem;
+            border-radius: 999px;
+            background: rgba(0, 201, 167, 0.16);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: var(--primary-dark);
+        }
+
+        /* HERO HIGHLIGHT */
+        .hero-highlight {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            background: rgba(74, 144, 226, 0.15);
+            border-left: 3px solid var(--primary);
+            border-radius: 16px;
+            padding: 0.9rem 1.2rem;
+            max-width: 640px;
+        }
+
+        /* CONTACTS */
+        .contacts {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            color: var(--muted);
+        }
+
+        .contacts__company {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .contacts__list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .contact-item span {
+            font-size: 1.1rem;
+        }
+
+        .contacts-large {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            font-size: clamp(1.2rem, 2.6vw, 1.8rem);
+            margin: clamp(2rem, 5vw, 3.4rem) 0;
+        }
+
+        .contacts-large strong {
+            color: inherit;
+        }
+
+        /* PANELS & BOXES */
+        .gradient-panel {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.92), rgba(0, 201, 167, 0.88));
+            border-radius: 24px;
+            padding: clamp(1.8rem, 4vw, 2.4rem);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            box-shadow: 0 26px 60px rgba(74, 144, 226, 0.25);
+        }
+
+        .gradient-panel h4 {
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .info-box {
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 24px;
+            border: 1px solid rgba(74, 144, 226, 0.26);
+            padding: clamp(1.5rem, 3vw, 1.8rem);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 1.4rem;
+        }
+
+        /* METRIC CARDS */
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 252, 255, 0.95));
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            box-shadow: 0 10px 40px rgba(74, 144, 226, 0.15);
+            border: 1px solid rgba(74, 144, 226, 0.12);
+            transition: all 0.3s ease;
+            will-change: transform;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 50px rgba(74, 144, 226, 0.22);
+        }
+
+        .metric-card__value {
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .metric-card__label {
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            color: var(--muted);
+            margin-top: 0.6rem;
+            font-weight: 500;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        /* PAIN POINTS */
+        .pain-point {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 245, 245, 0.9));
+            border-radius: 18px;
+            padding: clamp(1.3rem, 2.5vw, 1.8rem);
+            border-left: 4px solid var(--danger);
+            box-shadow: 0 8px 30px rgba(255, 68, 68, 0.12);
+            transition: all 0.3s ease;
+            will-change: transform;
+        }
+
+        .pain-point:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 68, 68, 0.18);
+        }
+
+        .pain-point__value {
+            font-size: clamp(2rem, 4.5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--danger);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .pain-point__label {
+            font-size: clamp(1.1rem, 2vw, 1.2rem);
+            color: var(--text);
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* SCALE CARDS */
+        .scale-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 252, 255, 0.95));
+            border-radius: 18px;
+            padding: clamp(1.4rem, 2.8vw, 1.9rem);
+            box-shadow: 0 8px 35px rgba(74, 144, 226, 0.14);
+            border: 2px solid;
+            transition: all 0.3s ease;
+            will-change: transform;
+        }
+
+        .scale-card.primary {
+            border-color: var(--primary);
+        }
+
+        .scale-card.danger {
+            border-color: var(--danger);
+        }
+
+        .scale-card.warning {
+            border-color: var(--warning);
+        }
+
+        .scale-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 14px 45px rgba(74, 144, 226, 0.2);
+        }
+
+        .scale-card__icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .scale-card__value {
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            font-weight: 800;
+            color: var(--text);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .scale-card__label {
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            color: var(--muted);
+            margin-top: 0.4rem;
+            font-weight: 500;
+        }
+
+        /* CRISIS INDICATOR */
+        .crisis-indicator {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--danger);
+            background: rgba(255, 68, 68, 0.08);
+            border-radius: 12px;
+            animation: pulse-crisis 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-crisis {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* ADVANTAGES LIST */
+        .advantages-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .advantages-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+            color: var(--text);
+        }
+
+        .advantages-list li::before {
+            content: '✅';
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        /* TABLES */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(74, 144, 226, 0.12);
+            background: white;
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .data-table th {
+            padding: clamp(0.9rem, 2vw, 1.2rem);
+            text-align: left;
+            font-weight: 700;
+            font-size: clamp(1.05rem, 1.9vw, 1.2rem);
+        }
+
+        .data-table td {
+            padding: clamp(0.8rem, 1.8vw, 1.1rem);
+            border-bottom: 1px solid rgba(74, 144, 226, 0.1);
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            color: var(--text);
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(74, 144, 226, 0.04);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table td:first-child {
+            font-weight: 600;
+        }
+
+        /* TEAM MEMBERS */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .team-member {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 252, 255, 0.95));
+            border-radius: 20px;
+            padding: clamp(1.6rem, 3vw, 2rem);
+            box-shadow: 0 10px 40px rgba(74, 144, 226, 0.15);
+            border: 1px solid rgba(74, 144, 226, 0.12);
+            transition: all 0.3s ease;
+            will-change: transform;
+        }
+
+        .team-member:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 55px rgba(74, 144, 226, 0.25);
+        }
+
+        .team-member__name {
+            font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+            font-weight: 700;
+            color: var(--text);
+            margin: 0 0 0.3rem;
+        }
+
+        .team-member__role {
+            font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .team-member__bio {
+            font-size: clamp(0.88rem, 1.7vw, 0.95rem);
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .team-member__bio li {
+            font-size: clamp(0.88rem, 1.7vw, 0.95rem);
+        }
+
+        /* ADVISOR BOX */
+        .advisor-box {
+            background: linear-gradient(135deg, rgba(0, 201, 167, 0.12), rgba(74, 144, 226, 0.12));
+            border-radius: 18px;
+            padding: clamp(1.4rem, 2.8vw, 1.8rem);
+            border: 2px solid var(--secondary);
+            margin-top: 1.5rem;
+        }
+
+        .advisor-box h4 {
+            color: var(--secondary);
+            margin-top: 0;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            display: grid;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .timeline-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 252, 255, 0.95));
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: clamp(1.2rem, 2.5vw, 1.6rem);
+            box-shadow: 0 6px 25px rgba(74, 144, 226, 0.12);
+        }
+
+        .timeline-item__title {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 0.6rem;
+        }
+
+        .timeline-item__content {
+            font-size: clamp(0.9rem, 1.7vw, 0.98rem);
+            color: var(--muted);
+        }
+
+        .timeline-item__content li {
+            font-size: clamp(0.9rem, 1.7vw, 0.98rem);
+        }
+
+        /* GRID LAYOUTS */
+        .grid {
+            display: grid;
+            gap: 1.2rem;
+        }
+
+        .grid.grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .grid.grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .grid.grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        /* PROBLEM LAYOUT */
+        .problem-layout {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(1.8rem, 3.5vh, 2.5rem);
+        }
+
+        .problem-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* PLAIN LISTS */
+        .plain {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .plain.small {
+            font-size: 0.9rem;
+        }
+
+        .plain.light {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* UTILITY CLASSES */
+        .center {
+            text-align: center;
+        }
+
+        .accent {
+            color: var(--primary-dark);
+        }
+
+        .section-gap {
+            margin-top: clamp(1.6rem, 4vh, 2.6rem);
+        }
+
+        /* FINAL SLIDE */
+        .final-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: clamp(2rem, 5vh, 3rem);
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.95), rgba(0, 201, 167, 0.92));
+            border-radius: 32px;
+            color: white;
+            min-height: 70vh;
+        }
+
+        .final-slide h2 {
+            color: white;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+        }
+
+        .final-slide h2::after {
+            background: white;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .final-slide h3 {
+            color: white;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            margin-top: 1.5rem;
+        }
+
+        .final-slide .lead {
+            color: rgba(255, 255, 255, 0.95);
+            max-width: 700px;
+        }
+
+        /* PLACEHOLDER IMAGES */
+        .screenshot-placeholder {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8eef4 100%);
+            border-radius: 16px;
+            height: clamp(260px, 40vh, 400px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8e8e8e;
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            font-weight: 600;
+            border: 2px dashed rgba(74, 144, 226, 0.3);
+        }
+
+        .hero-placeholder {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.1) 0%, rgba(0, 201, 167, 0.1) 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 700;
+            border: 3px dashed rgba(74, 144, 226, 0.3);
+            min-height: clamp(300px, 40vh, 450px);
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1200px) {
+            .slide-content {
+                width: min(1400px, 94%);
+            }
+
+            .slide-content.with-media {
+                grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+                gap: clamp(2rem, 4vw, 3rem);
+                align-items: start;
+                padding-top: clamp(1.5rem, 3vh, 2.5rem);
+            }
+
+            .title-slide .slide-content {
+                grid-template-columns: minmax(0, 1fr);
+                gap: clamp(1.4rem, 5vw, 2.4rem);
+                padding-top: 0;
+            }
+
+            .slide-3d-image {
+                width: clamp(180px, 22vw, 250px);
+                height: clamp(180px, 22vw, 250px);
+                margin-top: 1rem;
+            }
+
+            .slide:not(.title-slide) .slide-content:not(.with-media) {
+                width: min(1300px, 92%);
+                padding-top: clamp(2rem, 4vh, 3rem);
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid.grid-4 {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide-content {
+                width: min(100%, 96%);
+            }
+
+            .slide-content.with-media {
+                grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+                gap: clamp(1.5rem, 3vw, 2rem);
+                padding-top: clamp(1rem, 2vh, 1.5rem);
+            }
+
+            .slide-enhanced .slide-content {
+                grid-template-columns: 1fr;
+                gap: clamp(1.5rem, 3vh, 2rem);
+                align-items: start;
+                padding-top: clamp(1rem, 2vh, 1.5rem);
+            }
+
+            .slide-enhanced .slide-3d-image {
+                width: clamp(160px, 35vw, 220px);
+                height: clamp(160px, 35vw, 220px);
+                order: -1;
+                justify-self: center;
+                margin-bottom: 1rem;
+            }
+
+            .slide-enhanced .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .slide-3d-image {
+                width: clamp(140px, 18vw, 200px);
+                height: clamp(140px, 18vw, 200px);
+            }
+
+            .slide:not(.title-slide) .slide-content:not(.with-media) {
+                width: min(100%, 94%);
+                padding-top: clamp(1.5rem, 3vh, 2rem);
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .grid.grid-2, .grid.grid-3, .grid.grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .slide-content.with-media {
+                grid-template-columns: minmax(0, 1fr);
+                gap: clamp(1rem, 3vw, 1.5rem);
+                padding-top: clamp(0.5rem, 1vh, 1rem);
+            }
+
+            .slide-3d-image {
+                width: clamp(160px, 35vw, 220px);
+                height: clamp(160px, 35vw, 220px);
+                margin-top: 1rem;
+                order: -1;
+                justify-self: center;
+            }
+
+            .slide:not(.title-slide) .slide-content:not(.with-media) {
+                width: min(100%, 94%);
+                padding-top: clamp(1rem, 2vh, 1.5rem);
+            }
+
+            .slide-number {
+                bottom: 1rem;
+                right: 1rem;
+                font-size: 0.75rem;
+            }
+
+            .hero-tags {
+                gap: 0.5rem;
+            }
+
+            .hero-tags span {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="deck">
+        <!-- Slide 1: Title -->
+        <div class="slide is-active title-slide" id="slide-1" data-title="Обложка">
+            <div class="slide-content">
+                <div class="slide-main-content hero-content">
+                    <div class="hero-badge">💼 Инвестиционная презентация</div>
+                    <h1>AI Телемедицина</h1>
+                    <p class="subtitle">Мгновенные медконсультации через Telegram для 25 млн пользователей Узбекистана</p>
+                    <div class="hero-tags">
+                        <span>Telegram-native</span>
+                        <span>HealthTech</span>
+                        <span>Click & Hambi Ready</span>
+                        <span>B2C + B2B</span>
+                    </div>
+                    <div class="hero-highlight">
+                        💡 Первая AI-платформа с интеграцией в Click SuperApp (18M) и Hambi (4M MRR)
+                    </div>
+                    <div class="contacts">
+                        <div class="contacts__company">AI Телемедицина</div>
+                        <div class="contacts__list">
+                            <div class="contact-item"><span>📱</span> +998 (90) XXX-XX-XX</div>
+                            <div class="contact-item"><span>✈️</span> @your_telegram</div>
+                            <div class="contact-item"><span>📧</span> contact@aitelemedicine.uz</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-media">
+                    <img src="Images/Футуристическое здравоохранение Sora.png" alt="AI Телемедицина" class="slide-3d-image" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problem -->
+        <div class="slide" id="slide-2" data-title="Проблема">
+            <div class="slide-content">
+                <div class="slide-main-content">
+                    <div class="problem-badge">⚠️ Кризис отрасли</div>
+                    <h2 class="gradient-text">Доступ к врачам — критическая проблема</h2>
+
+                    <div style="margin-top: 1.5rem;">
+                        <h3>Ключевые показатели рынка:</h3>
+                        <div class="grid grid-3" style="margin-top: 1rem;">
+                            <div class="scale-card primary">
+                                <div class="scale-card__icon">✈️</div>
+                                <div class="scale-card__value">25M</div>
+                                <div class="scale-card__label">Telegram-пользователей (76% интернета)</div>
+                            </div>
+                            <div class="scale-card danger">
+                                <div class="scale-card__icon">💊</div>
+                                <div class="scale-card__value">$2.0B</div>
+                                <div class="scale-card__label">Фармацевтический рынок</div>
+                            </div>
+                            <div class="scale-card warning">
+                                <div class="scale-card__icon">🏥</div>
+                                <div class="scale-card__value">9,000+</div>
+                                <div class="scale-card__label">Частных клиник</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <h3>Проблемы отрасли:</h3>
+                        <div class="grid grid-3" style="margin-top: 1rem;">
+                            <div class="pain-point">
+                                <div class="pain-point__value">$169</div>
+                                <div class="pain-point__label">Расходы на здравоохранение на человека в год</div>
+                            </div>
+                            <div class="pain-point">
+                                <div class="pain-point__value">87%</div>
+                                <div class="pain-point__label">Импортозависимость фармрынка</div>
+                            </div>
+                            <div class="pain-point">
+                                <div class="pain-point__value">0</div>
+                                <div class="pain-point__label">VC-backed healthtech стартапов</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">2</div>
+        </div>
+
+        <!-- Slide 3: Solution -->
+        <div class="slide" id="slide-3" data-title="Решение">
+            <div class="slide-content with-media">
+                <div class="slide-main-content">
+                    <h2>Телемедицинская платформа на базе AI</h2>
+
+                    <div class="info-box">
+                        <h3>🏥 Для пациентов:</h3>
+                        <ul class="advantages-list">
+                            <li>Консультации 24/7 через Telegram-бот и супераппы</li>
+                            <li>AI-анализ симптомов на уровне медицинских стандартов</li>
+                            <li>Рекомендации по анализам и препаратам</li>
+                            <li>Поддержка узбекского и русского языков (голосовой ввод/вывод)</li>
+                        </ul>
+                    </div>
+
+                    <div class="gradient-panel">
+                        <h4>🤖 Технологическое ядро:</h4>
+                        <ul class="plain light small">
+                            <li>• Современные медицинские LLM модели</li>
+                            <li>• Голосовой интерфейс (узбекский/русский)</li>
+                            <li>• Интеграция с Click SuperApp (18M) + Hambi (4M MRR)</li>
+                            <li>• RAG на базе протоколов МЗ РУз + локализация данных</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>🔄 Экосистемный подход:</h3>
+                        <ul>
+                            <li>База данных: <strong>пациенты → фармкомпании → клиники</strong></li>
+                            <li>Таргетированная реклама препаратов</li>
+                            <li>Перенаправление в клиники-партнеры</li>
+                            <li><strong>✅ Поддержка Минздрава получена</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <img src="Images/Медицинская экосистема Sora.png" alt="Медицинская экосистема" style="width: 100%; height: auto; border-radius: 16px; box-shadow: 0 10px 40px rgba(74, 144, 226, 0.2);">
+                </div>
+            </div>
+            <div class="slide-number">3</div>
+        </div>
+
+        <!-- Slide 4: Market -->
+        <div class="slide" id="slide-4" data-title="Рынок">
+            <div class="slide-content">
+                <div class="slide-main-content">
+                    <h2>Растущий рынок с минимальной конкуренцией</h2>
+
+                    <div class="info-box">
+                        <h3>📊 Структура рынка (Центральная Азия):</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Сегмент</th>
+                                    <th>Объем</th>
+                                    <th>Описание</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>TAM</strong></td>
+                                    <td>$500-600M</td>
+                                    <td>Digital health в Центральной Азии (73M населения)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SAM</strong></td>
+                                    <td>$350M</td>
+                                    <td>Serviceable после локализации и платежей</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SOM Year 1</strong></td>
+                                    <td>$5.25M</td>
+                                    <td>1.5% SAM — реалистичная цель первого года</td>
+                                </tr>
+                                <tr style="background: rgba(74, 144, 226, 0.05);">
+                                    <td><strong>SOM Year 3</strong></td>
+                                    <td>$17.5M</td>
+                                    <td>5% SAM — трехлетняя цель</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-card__value">$2.0B</div>
+                            <div class="metric-card__label">Фармрынок Узбекистана (подтверждено 3 источниками)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-card__value">+13%</div>
+                            <div class="metric-card__label">Ежегодный рост фармрынка</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-card__value">$173.8M</div>
+                            <div class="metric-card__label">Digital Health рынок 2024 → $304.7M к 2029</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-card__value">11.33%</div>
+                            <div class="metric-card__label">CAGR Digital Health рынка</div>
+                        </div>
+                    </div>
+
+                    <div class="section-gap">
+                        <h3>🎯 Конкурентный анализ:</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Мы</th>
+                                    <th>Ada Health</th>
+                                    <th>DMED (Гос)</th>
+                                    <th>ChatGPT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Присутствие</strong></td>
+                                    <td>✅ Локально</td>
+                                    <td>❌ Не в РУз</td>
+                                    <td>✅ В разработке</td>
+                                    <td>✅ Доступен</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Локализация</strong></td>
+                                    <td>✅ Узбекский</td>
+                                    <td>❌ Нет</td>
+                                    <td>✅ Узбекский</td>
+                                    <td>❌ Нет узбекского</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Точность AI</strong></td>
+                                    <td>97% (GPT-4)</td>
+                                    <td>87% топ-3</td>
+                                    <td>В разработке</td>
+                                    <td>72-87%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Монетизация</strong></td>
+                                    <td>✅ B2C + B2B</td>
+                                    <td>✅ B2B2C</td>
+                                    <td>❌ Государство</td>
+                                    <td>❌ Медицина</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Интеграции</strong></td>
+                                    <td>✅ Click, Hambi</td>
+                                    <td>❌ Нет локальных</td>
+                                    <td>❌ Ограничено</td>
+                                    <td>❌ Нет</td>
+                                </tr>
+                                <tr style="background: rgba(0, 201, 167, 0.05);">
+                                    <td><strong>Время запуска</strong></td>
+                                    <td>3-6 месяцев</td>
+                                    <td>12-24 месяца</td>
+                                    <td>6-12 месяцев</td>
+                                    <td>Уже есть</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="footnote"><strong>→ Окно возможностей: 12-24 месяца до экспансии Ada Health и K Health</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">4</div>
+        </div>
+
+        <!-- Slide 4.5: Competition & Lessons -->
+        <div class="slide" id="slide-4-5" data-title="Конкуренты">
+            <div class="slide-content">
+                <div class="slide-main-content">
+                    <h2>Конкурентный ландшафт: локальные и международные игроки</h2>
+
+                    <div class="grid grid-3">
+                        <div class="info-box" style="border: 2px solid var(--warning);">
+                            <h3 style="color: var(--warning);">⚡ Sino AI — ПРЯМОЙ КОНКУРЕНТ</h3>
+                            <div class="block">
+                                <p><strong>$21K invested, MVP launched, Telegram-based</strong></p>
+                            </div>
+                            <h4 style="font-size: 1rem; margin-top: 1rem;">Что у них есть:</h4>
+                            <ul class="plain small">
+                                <li>• AI-диагностика через Telegram-бот</li>
+                                <li>• Узбекский + Русский язык</li>
+                                <li>• Рабочий продукт с первыми пользователями</li>
+                                <li>• Планы на B2B (клиники, страховые)</li>
+                            </ul>
+                            <div style="background: rgba(255, 167, 38, 0.1); padding: 1rem; border-radius: 12px; margin-top: 1rem;">
+                                <strong style="color: var(--warning);">Наше преимущество:</strong> SuperApp интеграция (Click 18M + Hambi 4M MRR) vs standalone bot
+                            </div>
+                        </div>
+
+                        <div class="info-box" style="border: 2px solid var(--success);">
+                            <h3 style="color: var(--success);">✅ Ada Health — ПРОЦВЕТАЕТ</h3>
+                            <div class="block">
+                                <p><strong>13M пользователей, $120M+ funding, 148 стран</strong></p>
+                            </div>
+                            <h4 style="font-size: 1rem; margin-top: 1rem;">Что делают правильно:</h4>
+                            <ul class="plain small">
+                                <li>• 87% точность диагнозов в топ-3</li>
+                                <li>• Партнеры: Bayer, Novartis, NHS</li>
+                                <li>• Фокус на B2B2C модели</li>
+                                <li>• Постепенная глобальная экспансия</li>
+                            </ul>
+                            <div style="background: rgba(0, 201, 167, 0.1); padding: 1rem; border-radius: 12px; margin-top: 1rem;">
+                                <strong style="color: var(--success);">Наш ров:</strong> Локализация + SuperApps = 12-24 мес защиты
+                            </div>
+                        </div>
+
+                        <div class="info-box" style="border: 2px solid var(--danger);">
+                            <h3 style="color: var(--danger);">❌ Babylon Health — УРОК</h3>
+                            <div class="block">
+                                <p><strong>IPO $4.2B → банкрот (2023)</strong></p>
+                            </div>
+                            <h4 style="font-size: 1rem; margin-top: 1rem;">Ошибки:</h4>
+                            <ul class="plain small">
+                                <li>• Expansion на 16 стран сразу</li>
+                                <li>• Слабая unit economics</li>
+                                <li>• Потеря ключевых контрактов</li>
+                            </ul>
+                            <div style="background: rgba(255, 68, 68, 0.1); padding: 1rem; border-radius: 12px; margin-top: 1rem;">
+                                <strong style="color: var(--danger);">Наша стратегия:</strong> Фокус Узбекистан Y1, консервативная экономика
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-gap">
+                        <h3>🌟 Успешные региональные кейсы:</h3>
+                        <div class="grid grid-3">
+                            <div class="metric-card">
+                                <h4 style="margin: 0; font-size: 1.1rem;">Practo (Индия)</h4>
+                                <div class="metric-card__value" style="font-size: 2rem;">$29M</div>
+                                <div class="metric-card__label">Годовая выручка, прибыльны с FY24</div>
+                                <p style="font-size: 0.85rem; margin-top: 0.8rem;">400M+ пользователей, B2B SaaS для stable revenue</p>
+                            </div>
+                            <div class="metric-card">
+                                <h4 style="margin: 0; font-size: 1.1rem;">Halodoc (Индонезия)</h4>
+                                <div class="metric-card__value" style="font-size: 2rem;">$750M</div>
+                                <div class="metric-card__label">Годовая выручка (оценка 2025)</div>
+                                <p style="font-size: 0.85rem; margin-top: 0.8rem;">18M+ пользователей, партнерство с правительством</p>
+                            </div>
+                            <div class="metric-card">
+                                <h4 style="margin: 0; font-size: 1.1rem;">Click SuperApp (РУз)</h4>
+                                <div class="metric-card__value" style="font-size: 2rem;">18M</div>
+                                <div class="metric-card__label">Зарегистрированных пользователей</div>
+                                <p style="font-size: 0.85rem; margin-top: 0.8rem;">Лидер платежей + SuperApp, готовая инфраструктура для health-сервисов</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gradient-panel section-gap">
+                        <h4>🎯 Наша стратегия (Best of Both Worlds):</h4>
+                        <div class="grid grid-2">
+                            <div>
+                                <ul class="plain light">
+                                    <li>✅ Консервативная unit economics (LTV/CAC 30:1+)</li>
+                                    <li>✅ Фокус на Узбекистан первые 12 месяцев</li>
+                                    <li>✅ Partnership-first GTM (Click + Hambi SuperApps)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="plain light">
+                                    <li>✅ Постепенная экспансия (Казахстан Year 2)</li>
+                                    <li>✅ B2C + B2B модель как Practo</li>
+                                    <li>✅ Государственная поддержка как Halodoc</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">5</div>
+        </div>
+
+        <!-- Slide 6: Business Model -->
+        <div class="slide" id="slide-5" data-title="Бизнес-модель">
+            <div class="slide-content">
+                <div class="slide-main-content">
+                    <h2>Диверсифицированная монетизация</h2>
+
+                    <div class="grid grid-3">
+                        <div class="info-box">
+                            <h3>👤 B2C — Пациенты</h3>
+                            <div class="block">
+                                <strong>Разовая консультация:</strong>
+                                <div style="font-size: 1.8rem; color: var(--primary); font-weight: 800;">$3-5</div>
+                            </div>
+                            <div class="block">
+                                <strong>Подписка:</strong>
+                                <div style="font-size: 1.8rem; color: var(--primary); font-weight: 800;">$50/год</div>
+                            </div>
+                            <p><strong>Target:</strong> 5% конверсия из активных</p>
+                        </div>
+
+                        <div class="info-box">
+                            <h3>💊 B2B — Фармкомпании</h3>
+                            <div class="block">
+                                <strong>Подписка на аналитику:</strong>
+                                <div style="font-size: 1.8rem; color: var(--secondary); font-weight: 800;">$10K-20K/год</div>
+                            </div>
+                            <ul class="plain small">
+                                <li>• Таргетированная реклама</li>
+                                <li>• Доступ к анонимной статистике</li>
+                                <li>• Прямые рекомендации препаратов</li>
+                            </ul>
+                            <p><strong>Target:</strong> 20-30 компаний</p>
+                        </div>
+
+                        <div class="info-box">
+                            <h3>🏥 B2B — Клиники</h3>
+                            <div class="block">
+                                <strong>Комиссия с записи:</strong>
+                                <div style="font-size: 1.8rem; color: var(--primary-dark); font-weight: 800;">10-15%</div>
+                            </div>
+                            <ul class="plain small">
+                                <li>• Перенаправление пациентов</li>
+                                <li>• Предоплата через платформу</li>
+                                <li>• Онлайн-консультации врачей</li>
+                            </ul>
+                            <p><strong>Target:</strong> 10-15 клиник</p>
+                        </div>
+                    </div>
+
+                    <div class="gradient-panel section-gap">
+                        <h4>💰 Unit Economics (с учетом SuperApps интеграции):</h4>
+                        <div class="grid grid-4">
+                            <div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">ARPU</div>
+                                <div style="font-size: 2rem; font-weight: 800;">$50-60</div>
+                                <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.3rem;">Годовая подписка</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">CAC</div>
+                                <div style="font-size: 2rem; font-weight: 800;">$5-10</div>
+                                <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.3rem;">Click/Hambi интеграция</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">LTV</div>
+                                <div style="font-size: 2rem; font-weight: 800;">$300-670</div>
+                                <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.3rem;">3-5 лет retention</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">LTV/CAC</div>
+                                <div style="font-size: 2rem; font-weight: 800;">30:1-134:1</div>
+                                <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.3rem;">SuperApp эффект ✅</div>
+                            </div>
+                        </div>
+                        <p class="footnote light" style="margin-top: 1rem;">⚡ Click (18M) + Hambi (4M MRR) снижают CAC в 2-4 раза vs традиционный paid marketing</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">6</div>
+        </div>
+
+        <!-- Slide 7: Go-to-Market -->
+        <div class="slide" id="slide-6" data-title="Go-to-Market">
+            <div class="slide-content">
+                <div class="slide-main-content">
+                    <h2>Быстрый выход и масштабирование</h2>
+
+                    <div class="grid grid-3" style="margin-top: 2rem;">
+                        <div class="timeline-item">
+                            <div class="timeline-item__title">📍 М1-3: MVP & Тестирование</div>
+                            <div class="timeline-item__content">
+                                <ul class="plain small">
+                                    <li>• Запуск Telegram-бота</li>
+                                    <li>• Тест на 1,000 пользователей</li>
+                                    <li>• Фокус-группы с врачами</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-item__title">🚀 М4-6: Полноценный запуск через SuperApps</div>
+                            <div class="timeline-item__content">
+                                <ul class="plain small">
+                                    <li>• <strong>Click SuperApp</strong> (18M)</li>
+                                    <li>• <strong>Hambi от Beeline</strong> (4M MRR)</li>
+                                    <li>• 5 клиник + 3-5 фармкомпаний</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-item__title">📈 М7-12: Масштабирование</div>
+                            <div class="timeline-item__content">
+                                <ul class="plain small">
+                                    <li>• Региональная экспансия</li>
+                                    <li>• Выход в Казахстан</li>
+                                    <li>• Подготовка к Series A</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-gap">
+                        <h3>✅ Конкурентные преимущества:</h3>
+                        <div class="grid grid-2" style="margin-top: 1rem;">
+                            <div class="info-box">
+                                <p><strong>SuperApp distribution:</strong> Click (18M) + Hambi (4M MRR) vs Sino AI standalone bot</p>
+                                <p><strong>Telegram dominance:</strong> 25M пользователей (76% интернета, 2-е место в мире)</p>
+                            </div>
+                            <div class="info-box">
+                                <p><strong>B2B экосистема:</strong> 3 потока revenue (B2C + фарма + клиники)</p>
+                                <p><strong>Защита:</strong> 12-24 месяца до прихода Ada Health и K Health в регион</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-gap">
+                        <h3>📊 Прогноз метрик (реалистичный сценарий):</h3>
+                        <div class="grid grid-3" style="margin-top: 1rem;">
+                            <div class="metric-card">
+                                <div class="metric-card__label">Месяц 3</div>
+                                <div class="metric-card__value" style="font-size: 1.8rem;">5K</div>
+                                <p style="font-size: 0.95rem; margin-top: 0.5rem;">пользователей<br>200 платных<br>$1K MRR</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-card__label">Месяц 6</div>
+                                <div class="metric-card__value" style="font-size: 1.8rem;">20K</div>
+                                <p style="font-size: 0.95rem; margin-top: 0.5rem;">пользователей<br>1,500 платных<br>$8K MRR</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-card__label">Месяц 12</div>
+                                <div class="metric-card__value" style="font-size: 1.8rem;">100K</div>
+                                <p style="font-size: 0.95rem; margin-top: 0.5rem;">пользователей<br>10,000 платных<br>$50K MRR</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">7</div>
+        </div>
+
+        <!-- Slide 8: Financials -->
+        <div class="slide" id="slide-7" data-title="Финансы">
+            <div class="slide-content">
+                <div class="slide-main-content">
+                    <h2>Прогноз выручки на 12 месяцев</h2>
+
+                    <div class="info-box">
+                        <h3>💵 Финансовые сценарии (год 1):</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Показатель</th>
+                                    <th>Пессимистичный</th>
+                                    <th>Реалистичный</th>
+                                    <th>Оптимистичный</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Пользователи</strong></td>
+                                    <td>30,000</td>
+                                    <td>100,000</td>
+                                    <td>250,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Конверсия в платных</strong></td>
+                                    <td>2%</td>
+                                    <td>5%</td>
+                                    <td>8%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ARPU (годовой)</strong></td>
+                                    <td>$40</td>
+                                    <td>$60</td>
+                                    <td>$80</td>
+                                </tr>
+                                <tr style="background: rgba(74, 144, 226, 0.05);">
+                                    <td><strong>B2C выручка</strong></td>
+                                    <td>$24,000</td>
+                                    <td>$300,000</td>
+                                    <td>$1,600,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B2B фарма (подписки)</strong></td>
+                                    <td>$50,000</td>
+                                    <td>$200,000</td>
+                                    <td>$400,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B2B клиники (комиссии)</strong></td>
+                                    <td>$20,000</td>
+                                    <td>$100,000</td>
+                                    <td>$200,000</td>
+                                </tr>
+                                <tr style="background: rgba(0, 201, 167, 0.1); font-weight: 700;">
+                                    <td><strong>ИТОГО выручка</strong></td>
+                                    <td>$94,000</td>
+                                    <td>$600,000</td>
+                                    <td>$2,200,000</td>
+                                </tr>
+                                <tr style="background: rgba(255, 107, 107, 0.08);">
+                                    <td><strong>Расходы</strong></td>
+                                    <td>$140,000</td>
+                                    <td>$200,000</td>
+                                    <td>$300,000</td>
+                                </tr>
+                                <tr style="background: rgba(74, 144, 226, 0.12); font-weight: 700;">
+                                    <td><strong>EBITDA</strong></td>
+                                    <td style="color: var(--danger);">-$46,000</td>
+                                    <td style="color: var(--success);">+$400,000</td>
+                                    <td style="color: var(--success);">+$1,900,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="grid grid-2 section-gap">
+                        <div class="metric-card">
+                            <div class="metric-card__label">Точка безубыточности</div>
+                            <div class="metric-card__value">М8-10</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-card__label">Целевой MRR к М12</div>
+                            <div class="metric-card__value">$50K</div>
+                        </div>
+                    </div>
+
+                    <div class="gradient-panel section-gap">
+                        <h4>📊 Структура расходов (год 1, $200K):</h4>
+                        <div class="grid grid-4">
+                            <div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Команда</div>
+                                <div style="font-size: 1.8rem; font-weight: 800;">60%</div>
+                                <div style="font-size: 0.85rem; opacity: 0.85; margin-top: 0.3rem;">$120K</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Маркетинг</div>
+                                <div style="font-size: 1.8rem; font-weight: 800;">25%</div>
+                                <div style="font-size: 0.85rem; opacity: 0.85; margin-top: 0.3rem;">$50K</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">AI & Tech</div>
+                                <div style="font-size: 1.8rem; font-weight: 800;">10%</div>
+                                <div style="font-size: 0.85rem; opacity: 0.85; margin-top: 0.3rem;">$20K</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Операции</div>
+                                <div style="font-size: 1.8rem; font-weight: 800;">5%</div>
+                                <div style="font-size: 0.85rem; opacity: 0.85; margin-top: 0.3rem;">$10K</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">8</div>
+        </div>
+
+        <!-- Slide 9: Team -->
+        <div class="slide" id="slide-8" data-title="Команда">
+            <div class="slide-content">
+                <div class="slide-main-content">
+                    <h2>Команда с доменной экспертизой</h2>
+
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-member__name">[Ваше имя]</div>
+                            <div class="team-member__role">CEO & Medical Expert</div>
+                            <ul class="team-member__bio">
+                                <li>Фармтехнолог, 12 лет в индустрии</li>
+                                <li>Опыт разработки препаратов</li>
+                                <li>Глубокое понимание медицинской отрасли РУз</li>
+                                <li>Связи в Минздраве и фармкомпаниях</li>
+                            </ul>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="team-member__name">Артём Панферов</div>
+                            <div class="team-member__role">Tech Lead & AI Specialist</div>
+                            <ul class="team-member__bio">
+                                <li>Ex-Ozon, Ex-DNS</li>
+                                <li>Победитель 5 AI-хакатонов 2024</li>
+                                <li>Адвайзер Mao Group CRM</li>
+                                <li>Эксперт в LLM интеграциях</li>
+                            </ul>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="team-member__name">Павел Панферов</div>
+                            <div class="team-member__role">AI Expert & Co-founder</div>
+                            <ul class="team-member__bio">
+                                <li>Работа с агентскими AI-системами</li>
+                                <li>Спикер и ментор Zerokoder (разработка и AI)</li>
+                                <li>Соучредитель AI LAB</li>
+                                <li>Эксперт в AI-архитектурах и автоматизации</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="advisor-box">
+                        <h4>🎯 Advisory Board & Поддержка:</h4>
+                        <ul class="advantages-list">
+                            <li>Контакты в Минздраве Узбекистана для согласований</li>
+                            <li>Фокус-группа из 10+ практикующих врачей</li>
+                            <li>Консультанты по медицинским протоколам</li>
+                            <li>Связи в крупных фармкомпаниях региона</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box section-gap">
+                        <h3>💼 Текущий статус команды:</h3>
+                        <p><strong>✅ Full-time:</strong> CEO (фармэксперт)</p>
+                        <p><strong>🔄 Part-time:</strong> Артём Панферов (Tech Lead), Павел Панферов (AI Expert)</p>
+                        <p><strong>🎯 Требуется:</strong> PM, 2 full-time разработчика, маркетолог</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">9</div>
+        </div>
+
+        <!-- Slide 10: Investment Ask -->
+        <div class="slide" id="slide-9" data-title="Инвестзапрос">
+            <div class="slide-content">
+                <div class="slide-main-content">
+                    <h2 class="center">Запрос к инвестору</h2>
+                    <h3 class="center accent" style="font-size: clamp(2rem, 4.5vw, 3rem); margin-top: 1rem;">$100,000 (Pre-seed)</h3>
+                    <p class="lead center">Цель: Ускоренное развитие, а не поддержание на плаву</p>
+
+                    <div class="grid grid-3 section-gap">
+                        <div class="info-box">
+                            <div class="block">
+                                <h3>1️⃣ AI-ассистент</h3>
+                                <div style="font-size: 2rem; color: var(--primary); font-weight: 800;">$15K</div>
+                                <div style="font-size: 0.9rem; color: var(--muted);">4 месяца</div>
+                            </div>
+                            <ul class="plain small">
+                                <li>• Интеграция Telegram API</li>
+                                <li>• Узбекский язык + NLP</li>
+                                <li>• Голосовой ввод/вывод</li>
+                                <li>• RAG на протоколах МЗ</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box">
+                            <div class="block">
+                                <h3>2️⃣ Команда</h3>
+                                <div style="font-size: 2rem; color: var(--primary); font-weight: 800;">$60K</div>
+                                <div style="font-size: 0.9rem; color: var(--muted);">6 месяцев</div>
+                            </div>
+                            <ul class="plain small">
+                                <li>• Product Manager</li>
+                                <li>• 2-3 full-time разработчика</li>
+                                <li>• AI-консультант</li>
+                                <li>• Медицинский эксперт</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box">
+                            <div class="block">
+                                <h3>3️⃣ Маркетинг</h3>
+                                <div style="font-size: 2rem; color: var(--primary); font-weight: 800;">$25K</div>
+                                <div style="font-size: 0.9rem; color: var(--muted);">Первые 6 месяцев</div>
+                            </div>
+                            <ul class="plain small">
+                                <li>• Click/Humo интеграция</li>
+                                <li>• Performance-маркетинг</li>
+                                <li>• Контент-продакшн</li>
+                                <li>• Партнерские программы</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="gradient-panel section-gap">
+                        <h4>🎯 Уникальное предложение IT Park Ventures:</h4>
+                        <div class="grid grid-2">
+                            <div>
+                                <ul class="plain light">
+                                    <li>✅ <strong>Co-investment matching до $100K</strong></li>
+                                    <li>✅ Залучите $50K → IT Park добавит $50K</li>
+                                    <li>✅ Venture credit до $23K без залога</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <ul class="plain light">
+                                    <li>✅ 0% налогов до 2040 года</li>
+                                    <li>✅ Бесплатный офис до 12 месяцев</li>
+                                    <li>✅ Партнерство с Plug and Play</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box section-gap">
+                        <h3>💎 Почему именно сейчас:</h3>
+                        <ul class="advantages-list">
+                            <li><strong>Рынок недооценен:</strong> $2.0B фармрынок (не $500M как думали раньше)</li>
+                            <li><strong>Нулевая конкуренция:</strong> 0 VC-backed healthtech в Узбекистане</li>
+                            <li><strong>12-24 месяца защиты:</strong> до прихода Ada Health/K Health</li>
+                            <li><strong>Готовая инфраструктура:</strong> Click SuperApp (18M) + Hambi (4M MRR)</li>
+                            <li><strong>Государственная поддержка:</strong> IT Park + $110M pharma funds</li>
+                            <li><strong>AI технология созрела:</strong> Современные LLM достигли медицинских стандартов</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">10</div>
+        </div>
+
+        <!-- Slide 11: Final -->
+        <div class="slide" id="slide-10" data-title="Финал">
+            <div class="slide-content">
+                <div class="final-slide">
+                    <h2>Давайте создадим будущее телемедицины вместе!</h2>
+
+                    <h3>AI Телемедицина</h3>
+                    <p class="lead">Мгновенный доступ к качественным медконсультациям для Центральной Азии</p>
+
+                    <div class="contacts-large">
+                        <div><strong>📱</strong> +998 (90) XXX-XX-XX</div>
+                        <div><strong>✈️</strong> @your_telegram</div>
+                        <div><strong>📧</strong> contact@aitelemedicine.uz</div>
+                    </div>
+
+                    <p class="footnote light">
+                        ▶ Присоединяйтесь к революции в телемедицине Центральной Азии
+                    </p>
+                </div>
+            </div>
+            <div class="slide-number">11</div>
+        </div>
+    </div>
+
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <script>
+        // NAVIGATION SYSTEM
+        let currentSlideIndex = 0;
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const totalSlides = slides.length;
+
+        // Initialize first slide
+        function init() {
+            showSlide(0);
+            scaleSlides();
+            window.addEventListener('resize', debounce(scaleSlides, 150));
+        }
+
+        // Show specific slide with animation
+        function showSlide(index) {
+            if (index < 0 || index >= totalSlides) return;
+
+            const currentSlide = slides[currentSlideIndex];
+            const nextSlide = slides[index];
+
+            // Animate out current slide
+            gsap.to(currentSlide, {
+                opacity: 0,
+                y: -30,
+                duration: 0.4,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                    currentSlide.classList.remove('is-active');
+                }
+            });
+
+            // Animate in next slide
+            gsap.fromTo(nextSlide,
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: 'power2.out',
+                    onStart: () => {
+                        nextSlide.classList.add('is-active');
+                    }
+                }
+            );
+
+            currentSlideIndex = index;
+        }
+
+        // Navigate to next slide
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                showSlide(currentSlideIndex + 1);
+            }
+        }
+
+        // Navigate to previous slide
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                showSlide(currentSlideIndex - 1);
+            }
+        }
+
+        // Scale slides to fit viewport
+        function scaleSlides() {
+            const vh = window.innerHeight;
+            const vw = window.innerWidth;
+
+            slides.forEach(slide => {
+                const content = slide.querySelector('.slide-content');
+                if (!content) return;
+
+                // Reset scale
+                content.style.setProperty('--scale-factor', '1');
+
+                // Calculate needed scale
+                const contentHeight = content.scrollHeight;
+                const contentWidth = content.scrollWidth;
+                const availableHeight = vh * 0.85;
+                const availableWidth = vw * 0.92;
+
+                let scale = 1;
+                if (contentHeight > availableHeight) {
+                    scale = Math.min(scale, availableHeight / contentHeight);
+                }
+                if (contentWidth > availableWidth) {
+                    scale = Math.min(scale, availableWidth / contentWidth);
+                }
+
+                // Apply scale with minimum threshold
+                if (scale < 0.95) {
+                    content.style.setProperty('--scale-factor', scale.toFixed(3));
+                }
+            });
+        }
+
+        // KEYBOARD NAVIGATION
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight':
+                case 'ArrowDown':
+                case ' ':
+                case 'PageDown':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                case 'PageUp':
+                    e.preventDefault();
+                    prevSlide();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    showSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    showSlide(totalSlides - 1);
+                    break;
+            }
+        });
+
+        // TOUCH NAVIGATION
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+
+            // Horizontal swipe
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (Math.abs(deltaX) > 60) {
+                    if (deltaX > 0) {
+                        prevSlide();
+                    } else {
+                        nextSlide();
+                    }
+                }
+            }
+            // Vertical swipe
+            else {
+                if (Math.abs(deltaY) > 80) {
+                    if (deltaY > 0) {
+                        prevSlide();
+                    } else {
+                        nextSlide();
+                    }
+                }
+            }
+        }
+
+        // UTILITY: Debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Initialize on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
